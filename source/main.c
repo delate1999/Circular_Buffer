@@ -2,5 +2,5 @@
 #include "circular_buffer.h"
 
 void main(){
-    printf("\n Done! \n");
+    printf("\n Example main! \n");
 }

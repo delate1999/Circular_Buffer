@@ -12,6 +12,11 @@ project(${THIS}
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_C_STANDARD 99)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+enable_testing()
+
+add_subdirectory(googletest)
 
 set(SOURCES
     ${SOURCE}/circular_buffer.c
@@ -23,7 +28,9 @@ set(HEADERS
 
 include_directories(${INCLUDE})
 
-add_library(${THIS_LIB} ${SOURCES} ${HEADERS})
+add_library(${THIS_LIB} STATIC ${SOURCES} ${HEADERS})
+
+add_subdirectory(test)
 
 add_executable(${THIS} ${SOURCE}/main.c)
 
