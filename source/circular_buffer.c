@@ -29,6 +29,7 @@ circular_buffer_handler_t circular_buffer_init(uint8_t* buffer, size_t size){
 void circular_buffer_free(circular_buffer_handler_t handler){
     if(handler != NULL){
         free(handler);
+        handler = NULL; 
     }
 }
 uint8_t circular_buffer_put(circular_buffer_handler_t handler, uint8_t data){
