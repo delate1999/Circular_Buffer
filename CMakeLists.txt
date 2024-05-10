@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-set(THIS CircularBufferExample)
-set(THIS_LIB CircularBufferLib)
+set(THIS CircularBuffer)
 set(SOURCE ./source)
 set(INCLUDE ./include)
 
@@ -28,10 +27,6 @@ set(HEADERS
 
 include_directories(${INCLUDE})
 
-add_library(${THIS_LIB} STATIC ${SOURCES} ${HEADERS})
+add_library(${THIS} STATIC ${SOURCES} ${HEADERS})
 
 add_subdirectory(test)
-
-add_executable(${THIS} ${SOURCE}/main.c)
-
-target_link_libraries(${THIS} PRIVATE ${THIS_LIB})

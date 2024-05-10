@@ -32,15 +32,61 @@ void circular_buffer_free(circular_buffer_handler_t handler){
         handler = NULL; 
     }
 }
-uint8_t circular_buffer_put(circular_buffer_handler_t handler, uint8_t data){
 
+static void circular_buffer_advance_pointers(circular_buffer_handler_t handler){
+    if(handler->full){
+        handler->tail++; 
+        if(handler->tail == handler->max_size)
+            handler->tail = 0;
+    } 
+    handler->head++;
+    if(handler->head == handler->max_size)
+            handler->head = 0;
+    if((handler->head == handler->tail)) 
+        handler->full = true; 
 }
-uint8_t circular_buffer_get(circular_buffer_handler_t handler, uint8_t* data){
 
-}
-uint8_t circular_buffer_empty(circular_buffer_handler_t handler){
-    return (!handler->full && (handler->head == handler->tail));
-}
-uint8_t circular_buffer_full(circular_buffer_handler_t handler){
+static void circular_buffer_retreat_pointers(circular_buffer_handler_t handler){
+    handler->full = false; 
 
+    handler->tail++;
+    if(handler->tail == handler->max_size){
+        handler->tail = 0; 
+    }
+}
+
+bool circular_buffer_put(circular_buffer_handler_t handler, uint8_t data){
+    if(handler == NULL || handler->buffer == NULL)
+        return false; 
+
+    handler->buffer[handler->head] = data; 
+
+    circular_buffer_advance_pointers(handler);
+
+    return true; 
+}
+
+bool circular_buffer_get(circular_buffer_handler_t handler, uint8_t* data){
+    if(handler == NULL || handler->buffer == NULL)
+        return false; 
+
+    if(circular_buffer_empty(handler))
+        return false;
+
+    *data = handler->buffer[handler->tail]; 
+    circular_buffer_retreat_pointers(handler);
+
+    return true;
+}
+bool circular_buffer_empty(circular_buffer_handler_t handler){
+    if(handler != NULL)
+        return (!handler->full && (handler->head == handler->tail));
+    else
+        return false; 
+}
+bool circular_buffer_full(circular_buffer_handler_t handler){
+    if(handler != NULL)
+        return handler->full;
+    else    
+        return false; 
 }
