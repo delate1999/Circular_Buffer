@@ -1,2 +1,2 @@
 # Circular_Buffer
-Circular Buffer example built with Cmake, tested using Google Test framework and Ctest. 
+Simple circular buffer module. Built with Cmake, tested using Google Test framework, with help of Ctest. 
